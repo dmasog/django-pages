@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'nose',
     'south',
     'main',
+    'events',
 )
 
 MIDDLEWARE_CLASSES = (
