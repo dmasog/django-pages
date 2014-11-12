@@ -41,6 +41,8 @@ INSTALLED_APPS = (
     'main',
     'events',
     'landing',
+    'djcelery',
+    'celery_test',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -97,3 +99,11 @@ STATICFILES_DIRS = (
     # '/Users/jmitch/desktop/lwc/src/static/static_dirs/',
 )
 
+BROKER_HOST = "127.0.0.1"
+BROKER_PORT = 5672
+BROKER_VHOST = "/django_tutorials"
+BROKER_USER = "poster"
+BROKER_PASSWORD = "poster"
+
+import djcelery
+djcelery.setup_loader()
