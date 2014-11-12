@@ -36,8 +36,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'nose',
     'south',
+    'django_nose',
     'main',
     'events',
     'landing',
@@ -107,3 +107,5 @@ BROKER_PASSWORD = "poster"
 
 import djcelery
 djcelery.setup_loader()
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
