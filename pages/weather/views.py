@@ -3,12 +3,10 @@ from suds.client import Client
 from django.http import HttpResponse
 
 
-def home(request):
+def home(request,parm=""):
    url = 'http://www.webservicex.net/globalweather.asmx?WSDL'
    client = Client(url)
-   #print client
-   weather =  client.service.GetWeather('Bemidji', 'United States')
+   weather =  client.service.GetWeather(parm, 'United States')
    #weather =  client.service.GetCitiesByCountry('United States')
-   print weather
 
    return HttpResponse(weather)
