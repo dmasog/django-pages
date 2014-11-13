@@ -6,7 +6,15 @@
   
   <!--Body--> 
   <body class="parallax animated fadeIn"><!--Add "parallax" class if you have elements on the page with parallax backgrounds. "fadeIn" class makes content fades in on loading-->
-  	
+         {% if ALERT != "" %}
+         <div class="dark info-string">
+            <div class="inner">
+              <span class="close">x</span>
+              <p>{{ALERT}}</p>
+            </div>
+          </div>
+         {% endif %}
+
     <!--Off-Canvas-->
     <div class="off-canvas-wrap" data-offcanvas>
     	<div class="inner-wrap">
@@ -62,14 +70,14 @@
                     <div id="collapseOne" class="panel-collapse collapse in">
                       <div class="panel-body">
                       	<div class="row">
-                      		<div class="col-md-6">
+                      		<div class="col-md-7">
                           	<ul class="list-unstyled">
                                 {% for i in ShippingPoints_Location %}
                                 <li>{{ i }}</li>
                                 {% endfor %}
                                 </ul>
                           </div>
-                      		<div class="col-md-6">
+                      		<div class="col-md-5">
                           	<ul class="list-unstyled">
                                 {% for i in ShippingPoints_Status %}
                                 <li>{{ i }}</li>
