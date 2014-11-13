@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import Context, Template
+from shipping.views import pull_usps
 
 ctext = {}
 ctext["Carrier"]="USPS"
@@ -19,5 +20,9 @@ ctext["ShippingPoints_Status"]=["Shipped","Out for delivery","Package arrived at
 
 
 # Create your views here.
-def home(request):
+def home(request,parcel=""):
+    LOCATION,STATUS,STATE=pull_usps("LN430450976CN")
+    ctext["Checkpoints_Completed"]=STATE 
+    ctext["ShippingPoints_Location"]=LOCATION
+    ctext["ShippingPoints_Status"]=STATUS
     return render(request,"shipment-tracker.html",Context(ctext))
