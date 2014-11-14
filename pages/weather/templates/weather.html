@@ -1,6 +1,7 @@
 {% extends "footer.html" %}
 
 {% load staticfiles %}
+{% load hrs_previousday %}
 
 {% block main %}
 
@@ -37,16 +38,16 @@
                 	<table>
                     <tr>
                       <th scope="col">&nbsp;</th>
-                      <th scope="col">{% filter add:-8 %}{% now "H" %}{% endfilter %}:00</th>
-                      <th scope="col">{% filter add:-7 %}{% now "H" %}{% endfilter %}:00</th>
-                      <th scope="col">{% filter add:-6 %}{% now "H" %}{% endfilter %}:00</th>
-                      <th scope="col">{% filter add:-5 %}{% now "H" %}{% endfilter %}:00</th>
-                      <th scope="col">{% filter add:-4 %}{% now "H" %}{% endfilter %}:00</th>
-                      <th scope="col">{% filter add:-3 %}{% now "H" %}{% endfilter %}:00</th>
-                      <th scope="col">{% filter add:-2 %}{% now "H" %}{% endfilter %}:00</th> 
-                      <th scope="col">{% filter add:-1 %}{% now "H" %}{% endfilter %}:00</th>
-                      <th scope="col">{% now "H" %}:00</th>
-                      <th scope="col">{% filter add:1 %}{% now "H" %}{% endfilter %}:00</th>
+                      <th scope="col">{% filter add:-8|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
+                      <th scope="col">{% filter add:-7|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
+                      <th scope="col">{% filter add:-6|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
+                      <th scope="col">{% filter add:-5|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
+                      <th scope="col">{% filter add:-4|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
+                      <th scope="col">{% filter add:-3|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
+                      <th scope="col">{% filter add:-2|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th> 
+                      <th scope="col">{% filter add:-1|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
+                      <th scope="col">{% now "G" %}:00</th>
+                      <th scope="col">{% filter add:1|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
                     </tr>
                     <tr>
                       <th class="day" scope="row">{%now "m/d"%}<br>Temp</th>

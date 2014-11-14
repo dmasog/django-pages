@@ -44,5 +44,5 @@ def home(request,parm=""):
 
    #weather =  client.service.GetCitiesByCountry('United States')
 
-   return HttpResponse(weather)
-   #return render(request,"weather.html",Context(ctext))
+   #return HttpResponse(weather)
+   return render(request,"weather.html",Context(ctext))
