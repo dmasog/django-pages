@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'landing',
     'djcelery',
     'celery_test',
+    'weather',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -74,7 +75,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EST'
 
 USE_I18N = True
 

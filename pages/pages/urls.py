@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^celery_test/', 'celery_test.views.start_celery_task'),
     url(r'^celery_progress/', 'celery_test.views.monitor_celery_task'),
     url(r'^weather/(?P<parm>[A-Za-z\s]{0,25})/$', 'weather.views.home', name = 'home'),
+    url(r'^weather/', 'weather.views.home', name = 'home'),
     url(r'^$', 'main.views.home', name = 'home'),
 
 )
