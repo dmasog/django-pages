@@ -11,5 +11,5 @@ class Reading(models.Model):
     status = models.CharField(max_length=30)
 
     def __unicode__(self):
-        return self.temperature
+        return self.temperature + " -  " + self.location
 
