@@ -9,6 +9,8 @@ import xml.etree.ElementTree as ET
 # Create your views here.
 ctext = {}
 ctext["Carrier"]="USPS"
+ctext["Weather_Title"]="Weather History"
+ctext["Weather_Tagline"]="Weather readings for the last 3 days"
 ctext["Address"]="7321 Sweet Bay LN<br>Raleigh NC 27615"
 ctext["Order_Number"]="05-00032"
 ctext["TrackingNo"]="LN430450976CN"
