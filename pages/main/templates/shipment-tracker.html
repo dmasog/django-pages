@@ -1,0 +1,121 @@
+{% extends "footer.html" %}
+
+{% load staticfiles %}
+
+{% block main %}
+  
+  <!--Body--> 
+  <body class="parallax animated fadeIn"><!--Add "parallax" class if you have elements on the page with parallax backgrounds. "fadeIn" class makes content fades in on loading-->
+         {% if ALERT != "" %}
+         <div class="dark info-string">
+            <div class="inner">
+              <span class="close">x</span>
+              <p>{{ALERT}}</p>
+            </div>
+          </div>
+         {% endif %}
+
+    <!--Off-Canvas-->
+    <div class="off-canvas-wrap" data-offcanvas>
+    	<div class="inner-wrap">
+      
+        <!--Layout-->
+        <div class="site-layout"><!--If you add class "boxed" to .site-layout it wraps the whole document in a box, than you can simply add pattern background to body or leave it white. Please note in a "boxed" mode header doesn't stick to the top.-->
+        
+          <!--Page Content-->
+        <div class="page tracking-page">
+        	<div class="container double-padding-top">
+        		<div class="page-heading center">
+        			<h2>Track Your Package</h2>
+        		</div>
+            <div class="row">
+            	<!--Content-->
+            	<section class="com-md-8 col-sm-8 double-space-bottom">
+              	<h3 class="heading center">Shipment Tracking<span></span></h3>
+                <h4 class="bold-weight">Tracking timeline and details</h4>
+                <p>Keep track of your package delivery with timeline and tracking details</p>
+                <div class="tracking-timeline">
+                	<div class="timeline">
+                        {% for i in Chkpts %}
+                  	<div class="checkpoint {% if i != 5 %}{% if i < Checkpoints_Completed %} active {% endif %} {% else %} last {% endif %}">
+                        {% if i <= Checkpoints_Completed %}
+                        <span class="active"></span>
+                        {% else %}
+                        <span></span>
+                        {% endif %}
+                        </div>
+                        {% endfor %}
+                  	<!-- <div class="checkpoint"><span class="active"></span></div>
+                  	<div class="checkpoint"><span class="active"></span></div>
+                  	<div class="checkpoint"><span></span></div>
+                  	<div class="checkpoint last"><span></span></div> -->
+                  </div>
+                	<div class="labels">
+                		<div><span>Shipping soon</span><i>10%</i></div>
+                		<div><span>Shipped to</span><i>25%</i></div>
+                		<div><span>In transit</span><i>50%</i></div>
+                		<div><span>Out for delivery</span><i>75%</i></div>
+                		<div><span>Delivered</span><i>100%</i></div>
+                	</div>
+                </div>
+                <div class="panel-group" id="trackDetail">
+                  <div class="panel panel-primary">
+                    <div class="panel-heading">
+                      <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#trackDetail" href="#collapseOne">
+                          Tracking Details
+                        </a>
+                      </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                      <div class="panel-body">
+                      	<div class="row">
+                      		<div class="col-md-7">
+                          	<ul class="list-unstyled">
+                                {% for i in ShippingPoints_Location %}
+                                <li>{{ i }}</li>
+                                {% endfor %}
+                                </ul>
+                          </div>
+                      		<div class="col-md-5">
+                          	<ul class="list-unstyled">
+                                {% for i in ShippingPoints_Status %}
+                                <li>{{ i }}</li>
+                                {% endfor %}
+                                </ul>
+                          </div>
+                      	</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <!--Sidebar-->
+            	<aside class="com-md-4 col-sm-4 double-space-bottom">
+              	<h3 class="heading center">Shipment Information<span></span></h3>
+                <h4 class="bold-weight">Delivering to</h4>
+                
+                <p>{% autoescape off %}{{Address}}{% endautoescape %}</p>
+                <h4 class="bold-weight">Carrier</h4>
+                <p>{{Carrier}}</p>
+                <h4 class="bold-weight">Tracking #</h4>
+                <p>{{TrackingNo}}</p>
+                <h4 class="bold-weight">Order #</h4>
+                <p>{{Order_Number}}</p>
+                <h4 class="bold-weight">Package Contains</h4>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-6 package">
+                      <img src="{% static 'img/shop/tracking/01.jpg'%}" alt="Package 01"/>
+                      <a href="shop-single-dr.html">{{Order_Description}}</a>
+                    </div>
+                  </div>
+              </aside>
+            </div>
+        	</div>
+          
+        </div>
+        <!--Page Content Close-->
+  </body><!--Body Close-->
+</html>
+
+{% endblock %}
