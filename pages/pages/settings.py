@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'djcelery',
     'celery_test',
     'weather',
+    'storages',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -90,15 +91,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'static_root')
+
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static', 'static_dirs'),
-    #os.path.join(BASE_DIR, 'static', 'static_root'),
-    #'/Users/jmitch/desktop/lwc/src/static/static_dirs/',
-    # '/Users/jmitch/desktop/lwc/src/static/static_dirs/',
-    # '/Users/jmitch/desktop/lwc/src/static/static_dirs/',
-    # '/Users/jmitch/desktop/lwc/src/static/static_dirs/',
 )
 
 BROKER_HOST = "127.0.0.1"
@@ -112,13 +110,13 @@ djcelery.setup_loader()
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
-AWS_STORAGE_BUCKET_NAME = 'storages.backends.s3boto.S3BotoStorage'
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
 AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 AWS_PRELOAD_METADATA = True
 
 if not DEBUG:
-    STATICFILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
     S3_URL = 'http://%s.s3.amazonaws.com/assets/' % AWS_STORAGE_BUCKET_NAME
-    STATIC_URL: = S3_URL
+    STATIC_URL = S3_URL
