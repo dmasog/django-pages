@@ -3,6 +3,8 @@
 {% load staticfiles %}
 {% load hrs_previousday %}
 {% load event_tag %}
+{% load date_tag %}
+{% load ass_tag %}
 
 {% block main %}
 
@@ -34,65 +36,41 @@
                 	<div class="datePicker" id="datePicker"></div>
                 </div>
 
-                <div id="date">{{date}}
+                {% ass_tag date "%H" as hiller %}
 
-                <!--Schedule-->
-              	<div class="col-lg-9 col-lg-pull-3 schedule space-top space-bottom">
-                	<table>
-                    <tr>
-                      <th scope="col">&nbsp;</th>
-                      <th scope="col">{% filter add:-9|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
-                      <th scope="col">{% filter add:-8|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
-                      <th scope="col">{% filter add:-7|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
-                      <th scope="col">{% filter add:-6|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
-                      <th scope="col">{% filter add:-5|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
-                      <th scope="col">{% filter add:-4|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
-                      <th scope="col">{% filter add:-3|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
-                      <th scope="col">{% filter add:-2|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th> 
-                      <th scope="col">{% filter add:-1|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
-                      <th scope="col">{% now "G" %}:00</th>
-                    </tr>
-                    <tr>
-                      <th class="day" scope="row">{% now "m/d" %}</th>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td> 
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                    </tr>
-                    <tr>
-                      <th class="day" scope="row">{% now "m/"%}{% filter add:-1 %}{%now "d"%}{% endfilter %}</th>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                    </tr>
-                    <tr>
-                      <th class="day" scope="row">{% now "m/"%}{% filter add:-2 %}{%now "d"%}{% endfilter %}</th>
-                      <!--<td colspan="2"><a class="event" href="#" data-description="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio, eius, beatae. Voluptate, quia, ipsam explicabo dolor sit amet consectetur.">Event Name<span>Event short description</span></a></td>-->                                  
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                      <td colspan="1">{% event_tag 1 2 %}</td>
-                    </tr>
 
+		<!--Schedule-->
+		<div class="col-lg-9 col-lg-pull-3 schedule space-top space-bottom">
+			<table>
+		    <tr>
+		      <th scope="col">&nbsp;</th>
+		      <th scope="col">{% filter add:-9|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
+		      <th scope="col">{% filter add:-8|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
+		      <th scope="col">{% filter add:-7|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
+		      <th scope="col">{% filter add:-6|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
+		      <th scope="col">{% filter add:-5|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
+		      <th scope="col">{% filter add:-4|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
+		      <th scope="col">{% filter add:-3|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
+		      <th scope="col">{% filter add:-2|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th> 
+		      <th scope="col">{% filter add:-1|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
+		      <th scope="col">{% now "G" %}:00</th>
+		    </tr>
+		    {% for date in dates %}
+		    <tr>
+		      <th class="day" scope="row">{{date}}</th>
+		      <td>{% date_tag date hiller|add:-9|hrs_previousday hiller %}</td>
+	              <td>{% date_tag date hiller|add:-8|hrs_previousday hiller %}</td>
+                      <td>{% date_tag date hiller|add:-7|hrs_previousday hiller %}</td>
+                      <td>{% date_tag date hiller|add:-6|hrs_previousday hiller %}</td>
+                      <td>{% date_tag date hiller|add:-5|hrs_previousday hiller %}</td>
+                      <td>{% date_tag date hiller|add:-4|hrs_previousday hiller %}</td>
+                      <td>{% date_tag date hiller|add:-3|hrs_previousday hiller %}</td>
+                      <td>{% date_tag date hiller|add:-2|hrs_previousday hiller %}</td>
+                      <td>{% date_tag date hiller|add:-1|hrs_previousday hiller %}</td>
+                      <td>{% date_tag date hiller hiller%}</td>
+
+	    </tr>
+	    {% endfor %}
 
                   </table>
                 </div>

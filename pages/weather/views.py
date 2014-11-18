@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.template import Context, Template
 from weather.models import Reading
 import os
+import datetime
 import xml.etree.ElementTree as ET
 
 # Create your views here.
@@ -24,10 +25,15 @@ ctext["ShippingPoints_Location"]=["January 23, 2014, 11:03 am, Alexandria VA US"
 ctext["ShippingPoints_Status"]=["Shipped","Out for delivery","Package arrived at a carrier facility","Package arrived at a carrier facility","Package arrived at a carrier facility","Package arrived at a carrier facility","Package arrived at a carrier facility","Package arrived at a carrier facility"]
 
 def home(request,parm=""):
+   ctext["dates"]=[]
    if "date" in request.REQUEST:
-       ctext["date"]=request.REQUEST["date"]
+       for i in range(3):
+           a,b,c = request.REQUEST["date"].split("/")
+           ctext["dates"].append((datetime.date(int(c),int(b),int(a))-datetime.timedelta(i)).strftime("%m/%d/%y"))
    else:
-       ctext["date"]=""
+       for i in range(3):
+           ctext["dates"].append((datetime.datetime.today()-datetime.timedelta(i)).strftime("%m/%d/%y"))
+
    url = 'http://www.webservicex.net/globalweather.asmx?WSDL'
    client = Client(url)
    #parm = parm.replace(chr(20)," ")
