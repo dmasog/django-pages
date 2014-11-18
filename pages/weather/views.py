@@ -2,6 +2,7 @@ from django.shortcuts import render
 from suds.client import Client
 from django.http import HttpResponse
 from django.template import Context, Template
+from django.utils.text import slugify
 from weather.models import Reading
 import os
 import datetime
@@ -50,7 +51,7 @@ def home(request,parm=""):
       if el.tag in ["Location","Wind","SkyConditions","Temperature","DewPoint","RelativeHumidity","Pressure","Status"]:
           fds.append(el.text)
    print "FDS:",len(fds),fds
-   r = Reading(location=fds[0],wind=fds[1],sky_conditions=fds[2],temperature=fds[3],dewpoint=fds[4],rh=fds[5],pressure=fds[6],status=fds[7])
+   r = Reading(slug=slugify(parm),location=fds[0],wind=fds[1],sky_conditions=fds[2],temperature=fds[3],dewpoint=fds[4],rh=fds[5],pressure=fds[6],status=fds[7])
    r.save()
    os.remove(parm)
 
