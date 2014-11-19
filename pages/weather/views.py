@@ -28,40 +28,40 @@ ctext["Chkpts"]=[1,2,3,4,5]
 ctext["ShippingPoints_Location"]=["January 23, 2014, 11:03 am, Alexandria VA US","January 24, 2014, 10:12 am, Alexandria VA US","January 25, 2014, 03:20 pm, Alexandria VA US","January 26, 2014, 05:15 pm, Alexandria VA US","January 27, 2014, 09:10 am, Alexandria VA US","January 28, 2014, 11:03 am, Alexandria VA US","January 29, 2014, 10:12 am, Alexandria VA US","January 30, 2014, 05:15 pm, Alexandria VA US"]
 ctext["ShippingPoints_Status"]=["Shipped","Out for delivery","Package arrived at a carrier facility","Package arrived at a carrier facility","Package arrived at a carrier facility","Package arrived at a carrier facility","Package arrived at a carrier facility","Package arrived at a carrier facility"]
 
-def lookup(dt):
-   rec = Reading.objects.filter(d=dt)
+def lookup(dt,slug):
+   rec = Reading.objects.filter(d=dt,slug=slug)
    print rec
    
 def home(request,parm=""):
    ctext["dates"]=[]
    for i in range(4):
        if "date" in request.REQUEST:
-           a,b,c = map(int,request.REQUEST["date"].split("/"))
-           ctext["dates"].append((datetime.date(c,b,a)-datetime.timedelta(i)).strftime("%Y-%m-%d"))
+           a,b,c = map(int,request.REQUEST["date"].split("-"))
+           ctext["dates"].append((datetime.date(c,a,b)-datetime.timedelta(i)).strftime("%Y-%m-%d"))
        else:
            ctext["dates"].append((datetime.datetime.today()-datetime.timedelta(i)).strftime("%Y-%m-%d"))
-
+   print "CTEXT:",ctext["dates"]
    try:
-      client = Client('http://www.webservicex.net/globalweather.asmx?WSDL')
-      weather =  client.service.GetWeather(parm, 'United States')
-      with open(parm,"w") as f:
-         weather = weather.replace('encoding="utf-16"','')
-         f.write(weather)
+       client = Client('http://www.webservicex.net/globalweather.asmx?WSDL')
+       weather =  client.service.GetWeather(parm, 'United States')
+       with open(parm,"w") as f:
+          weather = weather.replace('encoding="utf-16"','')
+          f.write(weather)
 
-      doc = ET.parse(parm).getroot()
-      fds = []   
-      for el in root:
-          if el.tag in ["Location","Wind","SkyConditions","Temperature","DewPoint","RelativeHumidity","Pressure","Status"]:
-              fds.append(el.text)
+       root = ET.parse(parm).getroot()
+       fds = []   
+       for el in root:
+           if el.tag in ["Location","Wind","SkyConditions","Temperature","DewPoint","RelativeHumidity","Pressure","Status"]:
+               fds.append(el.text)
    except:
-      pass #Web Service Exception
+       print "Web Service Error"  #Web Service Exception
    try:
-   
-      r = Reading(slug=slugify(parm),location=fds[0],wind=fds[1],sky_conditions=fds[2],temperature=fds[3],dewpoint=fds[4],rh=fds[5],pressure=fds[6],status=fds[7])
-      r.save()
-      os.remove(parm)
+       r = Reading(slug=slugify(parm),location=fds[0],wind=fds[1],sky_conditions=fds[2],temperature=fds[3],dewpoint=fds[4],rh=fds[5],pressure=fds[6],status=fds[7])
+       r.save()
+       os.remove(parm)
+       ctext["slug"]=slugify(parm)
    except:
-      pass #Database Exception
+       print "Database Error" #Database Exception
 
    #weather =  client.service.GetCitiesByCountry('United States')
 

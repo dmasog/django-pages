@@ -1,9 +1,10 @@
 from django.db import models
+from datetime import datetime
 
 class Reading(models.Model):
     slug = models.SlugField(max_length=40,default="raleigh")
-    d  = models.DateField(auto_now_add=True)
-    dt = models.DateTimeField(auto_now_add=True)
+    d  = models.DateField(default=datetime.now())
+    dt = models.DateTimeField(default=datetime.now())
     location = models.CharField(max_length=200)
     wind = models.CharField(max_length=75)
     sky_conditions = models.CharField(max_length=30)

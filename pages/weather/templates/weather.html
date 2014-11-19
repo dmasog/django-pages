@@ -44,8 +44,8 @@
 			<table>
 		    <tr>
 		      <th scope="col">&nbsp;</th>
-		      <th scope="col">{% filter add:-9|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
-		      <th scope="col">{% filter add:-8|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
+		      <th scope="col">{% filter add:-11|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
+		      <th scope="col">{% filter add:-10|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
 		      <th scope="col">{% filter add:-7|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
 		      <th scope="col">{% filter add:-6|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
 		      <th scope="col">{% filter add:-5|hrs_previousday %}{% now "G" %}{% endfilter %}:00</th>
@@ -58,16 +58,16 @@
 		    {% for date in dates %}
 		    <tr>
 		      <th class="day" scope="row">{{date}}</th>
-		      <td>{% date_tag date hiller|add:-9|hrs_previousday hiller %}</td>
-	              <td>{% date_tag date hiller|add:-8|hrs_previousday hiller %}</td>
-                      <td>{% date_tag date hiller|add:-7|hrs_previousday hiller %}</td>
-                      <td>{% date_tag date hiller|add:-6|hrs_previousday hiller %}</td>
-                      <td>{% date_tag date hiller|add:-5|hrs_previousday hiller %}</td>
-                      <td>{% date_tag date hiller|add:-4|hrs_previousday hiller %}</td>
-                      <td>{% date_tag date hiller|add:-3|hrs_previousday hiller %}</td>
-                      <td>{% date_tag date hiller|add:-2|hrs_previousday hiller %}</td>
-                      <td>{% date_tag date hiller|add:-1|hrs_previousday hiller %}</td>
-                      <td>{% date_tag date hiller hiller%}</td>
+		      <td>{% date_tag date hiller|add:-11|hrs_previousday hiller slug %}</td>
+	              <td>{% date_tag date hiller|add:-10|hrs_previousday hiller slug %}</td>
+                      <td>{% date_tag date hiller|add:-7|hrs_previousday hiller slug %}</td>
+                      <td>{% date_tag date hiller|add:-6|hrs_previousday hiller slug %}</td>
+                      <td>{% date_tag date hiller|add:-5|hrs_previousday hiller slug %}</td>
+                      <td>{% date_tag date hiller|add:-4|hrs_previousday hiller slug %}</td>
+                      <td>{% date_tag date hiller|add:-3|hrs_previousday hiller slug %}</td>
+                      <td>{% date_tag date hiller|add:-2|hrs_previousday hiller slug %}</td>
+                      <td>{% date_tag date hiller|add:-1|hrs_previousday hiller slug %}</td>
+                      <td>{% date_tag date hiller hiller slug %}</td>
 
 	    </tr>
 	    {% endfor %}
