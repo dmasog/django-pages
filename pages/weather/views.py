@@ -53,11 +53,15 @@ def home(request,parm=""):
       for el in root:
           if el.tag in ["Location","Wind","SkyConditions","Temperature","DewPoint","RelativeHumidity","Pressure","Status"]:
               fds.append(el.text)
+   except:
+      pass #Web Service Exception
+   try:
+   
       r = Reading(slug=slugify(parm),location=fds[0],wind=fds[1],sky_conditions=fds[2],temperature=fds[3],dewpoint=fds[4],rh=fds[5],pressure=fds[6],status=fds[7])
       r.save()
       os.remove(parm)
    except:
-      pass
+      pass #Database Exception
 
    #weather =  client.service.GetCitiesByCountry('United States')
 
