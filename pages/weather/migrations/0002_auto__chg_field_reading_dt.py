@@ -8,33 +8,20 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Reading'
-        db.create_table(u'weather_reading', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(default='raleigh', max_length=40)),
-            ('dt', self.gf('django.db.models.fields.DateField')(auto_now_add=True, blank=True)),
-            ('location', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('wind', self.gf('django.db.models.fields.CharField')(max_length=75)),
-            ('sky_conditions', self.gf('django.db.models.fields.CharField')(max_length=30)),
-            ('temperature', self.gf('django.db.models.fields.CharField')(max_length=30)),
-            ('dewpoint', self.gf('django.db.models.fields.CharField')(max_length=30)),
-            ('rh', self.gf('django.db.models.fields.CharField')(max_length=30)),
-            ('pressure', self.gf('django.db.models.fields.CharField')(max_length=30)),
-            ('status', self.gf('django.db.models.fields.CharField')(max_length=30)),
-        ))
-        db.send_create_signal(u'weather', ['Reading'])
 
+        # Changing field 'Reading.dt'
+        db.alter_column(u'weather_reading', 'dt', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True))
 
     def backwards(self, orm):
-        # Deleting model 'Reading'
-        db.delete_table(u'weather_reading')
 
+        # Changing field 'Reading.dt'
+        db.alter_column(u'weather_reading', 'dt', self.gf('django.db.models.fields.DateField')(auto_now_add=True))
 
     models = {
         u'weather.reading': {
             'Meta': {'object_name': 'Reading'},
             'dewpoint': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
-            'dt': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'dt': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'location': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'pressure': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
