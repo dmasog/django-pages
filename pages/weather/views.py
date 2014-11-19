@@ -41,22 +41,23 @@ def home(request,parm=""):
        else:
            ctext["dates"].append((datetime.datetime.today()-datetime.timedelta(i)).strftime("%Y-%m-%d"))
 
-   url = 'http://www.webservicex.net/globalweather.asmx?WSDL'
-   client = Client(url)
-   weather =  client.service.GetWeather(parm, 'United States')
-   with open(parm,"w") as f:
-      weather = weather.replace('encoding="utf-16"','')
-      f.write(weather)
+   try:
+      client = Client('http://www.webservicex.net/globalweather.asmx?WSDL')
+      weather =  client.service.GetWeather(parm, 'United States')
+      with open(parm,"w") as f:
+         weather = weather.replace('encoding="utf-16"','')
+         f.write(weather)
 
-   doc = ET.parse(parm)
-   root = doc.getroot()
-   fds = []   
-   for el in root:
-      if el.tag in ["Location","Wind","SkyConditions","Temperature","DewPoint","RelativeHumidity","Pressure","Status"]:
-          fds.append(el.text)
-   r = Reading(slug=slugify(parm),location=fds[0],wind=fds[1],sky_conditions=fds[2],temperature=fds[3],dewpoint=fds[4],rh=fds[5],pressure=fds[6],status=fds[7])
-   r.save()
-   os.remove(parm)
+      doc = ET.parse(parm).getroot()
+      fds = []   
+      for el in root:
+          if el.tag in ["Location","Wind","SkyConditions","Temperature","DewPoint","RelativeHumidity","Pressure","Status"]:
+              fds.append(el.text)
+      r = Reading(slug=slugify(parm),location=fds[0],wind=fds[1],sky_conditions=fds[2],temperature=fds[3],dewpoint=fds[4],rh=fds[5],pressure=fds[6],status=fds[7])
+      r.save()
+      os.remove(parm)
+   except:
+      pass
 
    #weather =  client.service.GetCitiesByCountry('United States')
 
