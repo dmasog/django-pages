@@ -13,9 +13,10 @@ os.environ['TZ'] = "EST"
 time.tzset()
 # Create your views here.
 ctext = {}
+ctext["Page_Title"]="Weather History"
 ctext["Carrier"]="USPS"
 ctext["Weather_Title"]="Weather History"
-ctext["Weather_Tagline"]="Weather readings for the last 3 days"
+ctext["Weather_Tagline"]="Weather readings for "
 ctext["Address"]="7321 Sweet Bay LN<br>Raleigh NC 27615"
 ctext["Order_Number"]="05-00032"
 ctext["TrackingNo"]="LN430450976CN"
@@ -40,7 +41,6 @@ def home(request,parm=""):
            ctext["dates"].append((datetime.date(c,a,b)-datetime.timedelta(i)).strftime("%Y-%m-%d"))
        else:
            ctext["dates"].append((datetime.datetime.today()-datetime.timedelta(i)).strftime("%Y-%m-%d"))
-   print "CTEXT:",ctext["dates"]
    try:
        client = Client('http://www.webservicex.net/globalweather.asmx?WSDL')
        weather =  client.service.GetWeather(parm, 'United States')
@@ -53,15 +53,12 @@ def home(request,parm=""):
        for el in root:
            if el.tag in ["Location","Wind","SkyConditions","Temperature","DewPoint","RelativeHumidity","Pressure","Status"]:
                fds.append(el.text)
-   except:
-       print "Web Service Error"  #Web Service Exception
-   try:
+       os.remove(parm)
        r = Reading(slug=slugify(parm),location=fds[0],wind=fds[1],sky_conditions=fds[2],temperature=fds[3],dewpoint=fds[4],rh=fds[5],pressure=fds[6],status=fds[7])
        r.save()
-       os.remove(parm)
        ctext["slug"]=slugify(parm)
    except:
-       print "Database Error" #Database Exception
+       print "Webservice Error" #Database Exception
 
    #weather =  client.service.GetCitiesByCountry('United States')
 

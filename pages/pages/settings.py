@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     'celery_test',
     'weather',
     'storages',
+    'generic',
 )
 
 MIDDLEWARE_CLASSES = (

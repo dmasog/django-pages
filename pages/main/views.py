@@ -4,6 +4,7 @@ from django.template import Context, Template
 from shipping.views import pull_usps
 
 ctext = {}
+ctext["Page_Title"]="Shipping Page"
 ctext["Carrier"]="USPS"
 ctext["Address"]="7321 Sweet Bay LN<br>Raleigh NC 27615"
 ctext["Order_Number"]="05-00032"

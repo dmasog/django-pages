@@ -13,7 +13,7 @@ def lookup(dt,h,slug):
    eastern = timezone('US/Eastern')
    #eastern = timezone("UTC")
    start_date=datetime.datetime(a,b,c,h,tzinfo=eastern)
-   end_date=datetime.datetime(a,b,c,h+1,tzinfo=eastern)
+   end_date=datetime.datetime(a,b,c,h,tzinfo=eastern)+datetime.timedelta(hours=1)
    rec = Reading.objects.filter(dt__range=(start_date, end_date),slug=slug)
 
    if len(rec)>0:
