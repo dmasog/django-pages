@@ -6,7 +6,9 @@ import random
 
 register = template.Library()
 
-def lookup(dt,h,slug):
+def lookup(dt,h,orig,slug):
+   if h == 18:
+      print "Lookup:",dt,h,orig,slug
    start_date = dt
    a,b,c = map(int,dt.split("-"))
    h = int(h)
@@ -22,7 +24,21 @@ def lookup(dt,h,slug):
 
 @register.inclusion_tag('event_tag.html')
 def event_tag(r,c,orig,slug):
-      l,llen = lookup(r,c,slug)
+      l,llen = "",""
+      
+      if int(c)<=int(orig): 
+          print "NORMAL"
+          l,llen = lookup(r,c,orig,slug)
+      else:
+          print "YESTERDAY"
+          print "R:",r
+          a1,b1,c1 = map(int,r.split("-"))
+          d = datetime.date(a1,b1,c1)
+          r = d - datetime.timedelta(days=1)
+          r = r.strftime("%Y-%m-%d")
+          print "RR:",r
+
+          l,llen = lookup(r,c,orig,slug)
       a = {}
       if llen > 0:
          a["location"]=l.location
@@ -33,7 +49,7 @@ def event_tag(r,c,orig,slug):
          a["temperature"]=a["temperature"][:a["temperature"].find("(")-1]
          a["dewpoint"]=l.dewpoint
          a["dewpoint"]=a["dewpoint"][:a["dewpoint"].find("(")-1]
-         a["rh"]=l.rh
+         a["rh"]=l.rh+" RH"
          a["pressure"]=l.pressure
          a["pressure"]=a["pressure"][:a["pressure"].find("(")-1]
          a["status"]=l.status

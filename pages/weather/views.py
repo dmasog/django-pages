@@ -35,14 +35,15 @@ def lookup(dt,slug):
    
 def home(request,parm=""):
    ctext["dates"]=[]
-   for i in range(4):
+   for i in range(2):
        if "date" in request.REQUEST:
            a,b,c = map(int,request.REQUEST["date"].split("-"))
            ctext["dates"].append((datetime.date(c,a,b)-datetime.timedelta(i)).strftime("%Y-%m-%d"))
        else:
            ctext["dates"].append((datetime.datetime.today()-datetime.timedelta(i)).strftime("%Y-%m-%d"))
+   ctext["slug"]=slugify(parm)
    try:
-       client = Client('http://www.webservicex.net/globalweather.asmx?WSDL')
+       client = Client('http://www.webservicex.net/globalweather.asmx?WSDL',timeout=5)
        weather =  client.service.GetWeather(parm, 'United States')
        with open(parm,"w") as f:
           weather = weather.replace('encoding="utf-16"','')
@@ -56,10 +57,10 @@ def home(request,parm=""):
        os.remove(parm)
        r = Reading(slug=slugify(parm),location=fds[0],wind=fds[1],sky_conditions=fds[2],temperature=fds[3],dewpoint=fds[4],rh=fds[5],pressure=fds[6],status=fds[7])
        r.save()
-       ctext["slug"]=slugify(parm)
    except:
        print "Webservice Error" #Database Exception
-
+   finally:
+       pass
    #weather =  client.service.GetCitiesByCountry('United States')
 
    return render(request,"weather.html",Context(ctext))
