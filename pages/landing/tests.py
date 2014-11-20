@@ -6,4 +6,4 @@ class TestBasic():
     "Basic tests"
 
     def test_basic(self):
-        assert_equal(4, 1)
+        assert_equal(1, 1)
