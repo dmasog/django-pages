@@ -35,7 +35,7 @@ def lookup(dt,slug):
    
 def home(request,parm=""):
    ctext["dates"]=[]
-   for i in range(2):
+   for i in range(4):
        if "date" in request.REQUEST:
            a,b,c = map(int,request.REQUEST["date"].split("-"))
            ctext["dates"].append((datetime.date(c,a,b)-datetime.timedelta(i)).strftime("%Y-%m-%d"))
@@ -53,7 +53,8 @@ def home(request,parm=""):
        fds = []   
        for el in root:
            if el.tag in ["Location","Wind","SkyConditions","Temperature","DewPoint","RelativeHumidity","Pressure","Status"]:
-               fds.append(el.text)
+               if el.text.find("Windchill")<0:
+                  fds.append(el.text)
        os.remove(parm)
        r = Reading(slug=slugify(parm),location=fds[0],wind=fds[1],sky_conditions=fds[2],temperature=fds[3],dewpoint=fds[4],rh=fds[5],pressure=fds[6],status=fds[7])
        r.save()

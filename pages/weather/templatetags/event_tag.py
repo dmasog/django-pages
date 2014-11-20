@@ -27,16 +27,12 @@ def event_tag(r,c,orig,slug):
       l,llen = "",""
       
       if int(c)<=int(orig): 
-          print "NORMAL"
           l,llen = lookup(r,c,orig,slug)
       else:
-          print "YESTERDAY"
-          print "R:",r
           a1,b1,c1 = map(int,r.split("-"))
           d = datetime.date(a1,b1,c1)
           r = d - datetime.timedelta(days=1)
           r = r.strftime("%Y-%m-%d")
-          print "RR:",r
 
           l,llen = lookup(r,c,orig,slug)
       a = {}
