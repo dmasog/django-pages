@@ -10,6 +10,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import dj_database_url
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 TEMPLATE_CONTEXT_PROCESSORS=("django.contrib.auth.context_processors.auth",
@@ -29,7 +31,7 @@ SECRET_KEY = '&p7zt(qwv633!dm%i$q#t-q7(896^m)0-hy8q=igkn#d$g3j=h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True 
 
-DEBUG_STORAGE = False
+DEBUG_STORAGE = True 
 
 TEMPLATE_DEBUG = True
 
@@ -55,6 +57,7 @@ INSTALLED_APPS = (
     'celery_test',
     'weather',
     'storages',
+    'django_nltk',
     'generic',
 )
 
@@ -74,13 +77,18 @@ WSGI_APPLICATION = 'pages.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+DATABASES = {}
+if DEBUG_STORAGE:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }  
+    }  
+else:
+    DATABASES = {
+        'default': dj_database_url.config()
     }
-}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
