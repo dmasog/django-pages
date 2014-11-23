@@ -23,7 +23,9 @@ ctext["ALERT"]=0
 
 # Create your views here.
 def home(request,parcel=""):
-    LOCATION,STATUS,STATE,ALERT=pull_usps("LN430450976CN")
+    if parcel == "":
+        parcel = "LN430450976CN" 
+    LOCATION,STATUS,STATE,ALERT=pull_usps(parcel)
     ctext["Checkpoints_Completed"]=STATE 
     ctext["ShippingPoints_Location"]=LOCATION
     ctext["ShippingPoints_Status"]=STATUS
